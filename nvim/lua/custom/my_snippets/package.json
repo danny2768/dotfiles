@@ -1,0 +1,68 @@
+{
+    "name": "custom-snippets",
+    "description": "Snippets JavaScriptES6 - vscode-angular-snippets - ",
+    "version": "1.8.0",
+    "displayName": "JavaScript (ES6) code snippets",
+    "publisher": "xabikos",
+    "icon": "images/javascript.png",
+    "license": "SEE LICENSE IN LICENSE.md",
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "engines": {
+        "vscode": "^1.40.0"
+    },
+    "categories": [
+        "Snippets"
+    ],
+    "contributes": {
+        "snippets": [
+            {
+                "language": "javascript",
+                "path": "./snippets/javascript-snippets.json"
+            },
+            {
+                "language": "typescript",
+                "path": "./snippets/javascript-snippets.json"
+            },
+            {
+                "language": "javascriptreact",
+                "path": "./snippets/javascript-snippets.json"
+            },
+            {
+                "language": "typescriptreact",
+                "path": "./snippets/javascript-snippets.json"
+            },
+            {
+                "language": "html",
+                "path": "./snippets/javascript-snippets.json"
+            },
+
+
+
+            {
+                "language": "typescript",
+                "path": "./snippets/angular-snippets-typescript.json"
+            },
+            {
+                "language": "html",
+                "path": "./snippets/angular-snippets-html.json"
+            }
+
+
+
+        ]
+    },
+    "__metadata": {
+        "id": "a2cec723-5349-460d-9de9-0fd1f8d3456f",
+        "publisherId": "8961c3fe-3ec6-429d-886a-50b5af362a88",
+        "publisherDisplayName": "custom-snippets",
+        "targetPlatform": "undefined",
+        "isApplicationScoped": false,
+        "updated": false,
+        "isPreReleaseVersion": false,
+        "installedTimestamp": 1675527379619,
+        "preRelease": false
+    }
+}
