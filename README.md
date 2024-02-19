@@ -28,7 +28,19 @@ alias python='python3'
 ```
 
 ## Alacritty
-Copy alacritty folder in the following path: `~/.config/` and review this [README](./alacritty/README.md).
+![image](https://github.com/danny2768/dotfiles/assets/82215769/4e9230a0-7052-4506-b83b-03c00233c3ae)
+(The background belongs to the desktop, terminal is transparent)
+### Themes
+Please note that the themes part of the configuration depends on [Alacritty themes](https://github.com/alacritty/alacritty-theme)
+Install them from their repo or clone this folder (alacritty) in the following path: `~/.config/`
+
+### Font
+The font configured is MesloLGS Nerd Font.
+I suggest you to download it from [this link](https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/S/Regular/MesloLGSNerdFont-Regular.ttf) or see the patched nerd-fonts to ensure compatibility.
+
+- <https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts>
+
+
 
 
 ## Tmux
@@ -43,6 +55,9 @@ The configuration file uses the following tools:
 
 
 ## NeoVim
+![image](https://github.com/danny2768/dotfiles/assets/82215769/2f1030a3-c072-435c-a3c2-cf90b02eb6a7)
+![image](https://github.com/danny2768/dotfiles/assets/82215769/fa3e83e7-5d4f-4c93-bce5-58cb66771d5f)
+
 My NeoVim configuration uses [NvChad](https://nvchad.com)
 
 **Pre-requisites for NvChad**:
