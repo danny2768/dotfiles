@@ -37,9 +37,9 @@ Save Tmux configuration file in: `~/.tmux.conf`
 Note: this configuration file changes the Prefix to `Ctrl + a`
 
 The configuration file uses the following tools:
-[Tmux Plugin Manager](https://github.com/tmux-plugins/tpm)
-[Tmux Sensible](https://github.com/tmux-plugins/tmux-sensible)
-[Tmux Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
+- [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm)
+- [Tmux Sensible](https://github.com/tmux-plugins/tmux-sensible)
+- [Tmux Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
 
 
 ## NeoVim
