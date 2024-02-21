@@ -53,7 +53,7 @@ The configuration file uses the following tools:
 - [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm)
 - [Tmux Sensible](https://github.com/tmux-plugins/tmux-sensible)
 - [Tmux Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
-
+- [Tmux Continuum](https://github.com/tmux-plugins/tmux-continuum)
 
 ## NeoVim
 ![image](https://github.com/danny2768/dotfiles/assets/82215769/2f1030a3-c072-435c-a3c2-cf90b02eb6a7)
