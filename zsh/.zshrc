@@ -15,11 +15,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 
 
-autoload -Uz promptinit
-
-promptinit
-
-prompt adam1
+# autoload -Uz promptinit
+# promptinit
+# prompt adam1
 
 
 
@@ -35,7 +33,7 @@ bindkey -e
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 
-HISTSIZE=1000
+HISTSIZE=3000
 
 SAVEHIST=1000
 
@@ -85,7 +83,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-source /home/danny2768/powerlevel10k/powerlevel10k.zsh-theme
+
 
 
 
@@ -119,6 +117,8 @@ alias cat='batcat'
 
 alias python='python3'
 
+alias docker-compose='docker compose'
+
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -137,35 +137,73 @@ source /usr/share/zsh-sudo/sudo.plugin.zsh
 
 # Functions
 
-function mkt(){
+function initNode(){
+	npm init -y
+    npm i -D typescript @types/node ts-node-dev rimraf
+    npx tsc --init --outDir dist/ --rootDir src
+    mkdir .gitignore
+    cat >> .gitignore << EOF
+/node_modules
+/dist
 
-	mkdir {nmap,content,exploits,scripts}
+.env
+EOF 
 
+    echo -e "\e[1;33mRemember to add the following scripts to the package.json & update author.\e[0m" # Yellow color
+    echo "\"dev\": \"tsnd --respawn --clear src/app.ts\",
+\"build\": \"rimraf ./dist && tsc\",
+\"start\": \"npm run build && node dist/app.js\""
 }
 
+function update-system(){
+    echo -e "\e[1;33mUpdating apt packages...\e[0m" # Yellow color
+    sudo apt update
+    echo -e "\e[1;33mUpgrading apt packages...\e[0m" # Yellow color
+    sudo apt upgrade -y
+    echo -e "\e[1;33mUpdating flatpak packages...\e[0m" # Yellow color
+    flatpak update -y
+    echo -e "\e[1;33mRefreshing snap packages...\e[0m" # Yellow color
+    sudo snap refresh
+    echo -e "\e[1;33mSystem update completed.\e[0m" # Yellow color
+}
 
+function node-testing-ts(){
+    echo -e "\e[1;33mInstalling dependencies...\e[0m" # Yellow color
+    npm install -D jest @types/jest ts-jest supertest
+    npx jest --init
+
+    echo -e "\e[1;33mAdd the following lines to jest.config.ts\e[0m" # Yellow color
+    echo -e "preset: 'ts-jest',"
+    echo -e "testEnvironment: 'jest-environment-node',"
+ 
+    echo -e "\e[1;33mAdd the following scripts to the package.json\e[0m" # Yellow color
+    echo "\"test\": \"jest\",
+\"test:watch\": \"jest --watch\",
+\"test:coverage\": \"jest --coverage\""
+
+}
 
 # Extract nmap information
 
-function extractPorts(){
+# function extractPorts(){
 
-	ports="$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
+# 	ports="$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
 
-	ip_address="$(cat $1 | grep -oP '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}' | sort -u | head -n 1)"
+# 	ip_address="$(cat $1 | grep -oP '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}' | sort -u | head -n 1)"
 
-	echo -e "\n[*] Extracting information...\n" > extractPorts.tmp
+# 	echo -e "\n[*] Extracting information...\n" > extractPorts.tmp
 
-	echo -e "\t[*] IP Address: $ip_address"  >> extractPorts.tmp
+# 	echo -e "\t[*] IP Address: $ip_address"  >> extractPorts.tmp
 
-	echo -e "\t[*] Open ports: $ports\n"  >> extractPorts.tmp
+# 	echo -e "\t[*] Open ports: $ports\n"  >> extractPorts.tmp
 
-	echo $ports | tr -d '\n' | xclip -sel clip
+# 	echo $ports | tr -d '\n' | xclip -sel clip
 
-	echo -e "[*] Ports copied to clipboard\n"  >> extractPorts.tmp
+# 	echo -e "[*] Ports copied to clipboard\n"  >> extractPorts.tmp
 
-	cat extractPorts.tmp; rm extractPorts.tmp
+# 	cat extractPorts.tmp; rm extractPorts.tmp
 
-}
+# }
 
 
 
@@ -197,48 +235,39 @@ function man() {
 
 # fzf improvement
 
-function fzf-lovely(){
+# function fzf-lovely(){
 
+# 	if [ "$1" = "h" ]; then
 
+# 		fzf -m --reverse --preview-window down:20 --preview '[[ $(file --mime {}) =~ binary ]] &&
+#  	                echo {} is a binary file ||
+# 	                 (bat --style=numbers --color=always {} ||
+# 	                  highlight -O ansi -l {} ||
+# 	                  coderay {} ||
+# 	                  rougify {} ||
+# 	                  cat {}) 2> /dev/null | head -500'
 
-	if [ "$1" = "h" ]; then
+# 	else
 
-		fzf -m --reverse --preview-window down:20 --preview '[[ $(file --mime {}) =~ binary ]] &&
- 	                echo {} is a binary file ||
-	                 (bat --style=numbers --color=always {} ||
-	                  highlight -O ansi -l {} ||
-	                  coderay {} ||
-	                  rougify {} ||
-	                  cat {}) 2> /dev/null | head -500'
+# 	        fzf -m --preview '[[ $(file --mime {}) =~ binary ]] &&
+# 	                         echo {} is a binary file ||
+# 	                         (bat --style=numbers --color=always {} ||
+# 	                          highlight -O ansi -l {} ||
+# 	                          coderay {} ||
+# 	                          rougify {} ||
+# 	                          cat {}) 2> /dev/null | head -500'
 
-
-
-	else
-
-	        fzf -m --preview '[[ $(file --mime {}) =~ binary ]] &&
-	                         echo {} is a binary file ||
-	                         (bat --style=numbers --color=always {} ||
-	                          highlight -O ansi -l {} ||
-	                          coderay {} ||
-	                          rougify {} ||
-	                          cat {}) 2> /dev/null | head -500'
-
-	fi
-
-}
-
+# 	fi
+# }
 
 
 function rmk(){
-
 	scrub -p dod $1
-
 	shred -zun 10 -v $1
-
 }
 
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+# source <(ng completion script)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -246,7 +275,6 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
-
 (( ! ${+functions[p10k-instant-prompt-finalize]} )) || p10k-instant-prompt-finalize
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
