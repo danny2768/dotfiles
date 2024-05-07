@@ -53,8 +53,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 
 # Manual configuration
-PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
-
+PATH=${PATH}:/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/danny2768/.cargo/bin
+export PATH
 
 # Manual aliases
 alias ll='lsd -lh --group-dirs=first'
@@ -65,8 +65,13 @@ alias ls='lsd --group-dirs=first'
 alias cat='batcat'
 alias python='python3'
 alias docker-compose='docker compose'
-alias postman='/home/danny2768/Documents/Postman/app/Postman &'
-
+# alias postman='postman & disown'
+alias postman='postman >/dev/null 2>&1 & disown'
+alias notion='notion-snap >/dev/null 2>&1 & disown'
+alias dbeaver='dbeaver-ce >/dev/null 2>&1 & disown'
+alias docker-desktop='/opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1 & disown'
+alias mongo-compass='mongodb-compass >/dev/null 2>&1 & disown'
+alias discord='discord >/dev/null 2>&1 & disown'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -84,6 +89,8 @@ function update-system(){
     sudo apt update
     echo -e "\e[1;33mUpgrading apt packages...\e[0m" # Yellow color
     sudo apt upgrade -y
+    echo -e "\e[1;33mAutoremoving apt packages...\e[0m" # Yellow color
+    sudp apt autoremove
     echo -e "\e[1;33mUpdating flatpak packages...\e[0m" # Yellow color
     flatpak update -y
     echo -e "\e[1;33mRefreshing snap packages...\e[0m" # Yellow color
@@ -95,7 +102,8 @@ function initNode(){
 	npm init -y
     npm i -D typescript @types/node ts-node-dev rimraf
     npx tsc --init --outDir dist/ --rootDir src
-    mkdir .gitignore
+    touch docker-compose.yml
+    touch .gitignore
     echo "/node_modules" >> .gitignore
     echo "/dist" >> .gitignore
     echo ".env" >> .gitignore
@@ -104,6 +112,14 @@ function initNode(){
     echo "\"dev\": \"tsnd --respawn --clear src/app.ts\",
 \"build\": \"rimraf ./dist && tsc\",
 \"start\": \"npm run build && node dist/app.js\""
+}
+
+function i-express (){
+    npm i dotenv env-var express
+    npm i -D @types/express
+    touch .env
+    echo "PORT=3000" >> .env
+    cp .env .env.template
 }
 
 function node-testing-ts(){
