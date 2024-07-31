@@ -68,6 +68,7 @@ alias docker-compose='docker compose'
 # alias postman='postman & disown'
 alias postman='postman >/dev/null 2>&1 & disown'
 alias notion='notion-snap >/dev/null 2>&1 & disown'
+alias notion-calendar='notion-calendar-snap >/dev/null 2>&1 & disown'
 alias dbeaver='dbeaver-ce >/dev/null 2>&1 & disown'
 alias docker-desktop='/opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1 & disown'
 alias mongo-compass='mongodb-compass >/dev/null 2>&1 & disown'
@@ -90,7 +91,7 @@ function update-system(){
     echo -e "\e[1;33mUpgrading apt packages...\e[0m" # Yellow color
     sudo apt upgrade -y
     echo -e "\e[1;33mAutoremoving apt packages...\e[0m" # Yellow color
-    sudp apt autoremove
+    sudo apt autoremove
     echo -e "\e[1;33mUpdating flatpak packages...\e[0m" # Yellow color
     flatpak update -y
     echo -e "\e[1;33mRefreshing snap packages...\e[0m" # Yellow color
@@ -98,12 +99,13 @@ function update-system(){
     echo -e "\e[1;33mSystem update completed.\e[0m" # Yellow color
 }
 
-function initNode(){
+function init-node-ts(){
 	npm init -y
     npm i -D typescript @types/node ts-node-dev rimraf
     npx tsc --init --outDir dist/ --rootDir src
     touch docker-compose.yml
     touch .gitignore
+    mkdir -p src && touch src/app.ts
     echo "/node_modules" >> .gitignore
     echo "/dist" >> .gitignore
     echo ".env" >> .gitignore
@@ -114,7 +116,7 @@ function initNode(){
 \"start\": \"npm run build && node dist/app.js\""
 }
 
-function i-express (){
+function install-express (){
     npm i dotenv env-var express
     npm i -D @types/express
     touch .env
