@@ -4,7 +4,6 @@
     "version": "1.8.0",
     "displayName": "JavaScript (ES6) code snippets",
     "publisher": "xabikos",
-    "icon": "images/javascript.png",
     "license": "SEE LICENSE IN LICENSE.md",
     "repository": {
         "type": "git",
@@ -20,34 +19,34 @@
         "snippets": [
             {
                 "language": "javascript",
-                "path": "./snippets/javascript-snippets.json"
+                "path": "snippets/javascript.json"
             },
             {
                 "language": "typescript",
-                "path": "./snippets/javascript-snippets.json"
+                "path": "snippets/javascript.json"
             },
             {
                 "language": "javascriptreact",
-                "path": "./snippets/javascript-snippets.json"
+                "path": "snippets/javascript.json"
             },
             {
                 "language": "typescriptreact",
-                "path": "./snippets/javascript-snippets.json"
+                "path": "snippets/javascript.json"
             },
             {
                 "language": "html",
-                "path": "./snippets/javascript-snippets.json"
+                "path": "snippets/javascript.json"
             },
 
 
 
             {
                 "language": "typescript",
-                "path": "./snippets/angular-snippets-typescript.json"
+                "path": "snippets/angular-typescript.json"
             },
             {
                 "language": "html",
-                "path": "./snippets/angular-snippets-html.json"
+                "path": "snippets/angular-html.json"
             }
 
 
