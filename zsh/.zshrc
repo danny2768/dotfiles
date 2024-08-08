@@ -172,6 +172,18 @@ function rmk(){
 	shred -zun 10 -v $1
 }
 
+# Clear screen and scrollback
+function clear-history() {
+  print -n "\ec"   # ESC c sequence to reset the terminal
+  zle clear-screen # Call the default clear-screen action
+}
+
+
+# ZLE Widgets
+zle -N clear-history
+
+
+
 # Load Angular CLI autocompletion.
 # source <(ng completion script)
 
@@ -189,3 +201,8 @@ bindkey "^[[F" end-of-line
 bindkey "^[[3~" delete-char
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+# bindkey "^[[5~" up-line-or-history
+# bindkey "^[[6~" down-line-or-history
+
+# Bind Ctrl+L to clear the terminal and scrollback history
+bindkey '^k' clear-history
