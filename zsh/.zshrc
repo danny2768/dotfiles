@@ -154,4 +154,4 @@ export NVM_DIR="$HOME/.nvm"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
-export NPM_PRIVATE_TOKEN=iwL2W7k6D9aSR5xEbDAv
+export NPM_PRIVATE_TOKEN=<token>
