@@ -33,6 +33,7 @@ alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
 alias cat='batcat'
 alias python='python3'
+alias idea="nohup $HOME/.local/share/JetBrains/Toolbox/scripts/idea >/dev/null 2>&1 & disown"
 
 
 # Git
@@ -104,7 +105,12 @@ function node-testing-ts(){
     echo "\"test\": \"jest\",
 \"test:watch\": \"jest --watch\",
 \"test:coverage\": \"jest --coverage\""
+}
 
+# Back up desktop icons layout
+function backup-icons() {
+    cp ~/.config/plasma-org.kde.plasma.desktop-appletsrc ~/.config/icon-layout-backup
+    echo -e "\e[1;33mIcons succesfully backed up\e[0m" # Yellow color
 }
 
 # Clear screen and scrollback
@@ -154,4 +160,20 @@ export NVM_DIR="$HOME/.nvm"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
-export NPM_PRIVATE_TOKEN=<token>
+export NPM_PRIVATE_TOKEN=
+
+# Flutter SDK
+export PATH="$PATH:/home/danny2768/git/Flutter/flutter_sdk/flutter/bin"
+export PATH="$PATH:/home/danny2768/git/Flutter/flutter_sdk/flutter/bin/cache/dart-sdk/bin"
+
+
+# Created by `pipx` on 2025-07-04 22:33:30
+export PATH="$PATH:/home/danny2768/.local/bin"
+
+# bun completions
+[ -s "/home/danny2768/.bun/_bun" ] && source "/home/danny2768/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH=$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts
