@@ -41,7 +41,8 @@ I suggest you to download it from [this link](https://github.com/ryanoasis/nerd-
 
 - <https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts>
 
-
+### Toggle opacity
+`toggle-opacity` flips (or sets) the `opacity` value in Alacritty's `alacritty.toml` `[window]` section. See the [Alacritty README](./alacritty/README.md#toggle-opacity) for usage.
 
 
 ## Tmux

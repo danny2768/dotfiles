@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+# Toggle (or set) the `opacity` value in Alacritty's alacritty.toml [window] section.
+# Usage:
+#   toggle-opacity            # flip between LOW and HIGH
+#   toggle-opacity 0.5        # set an explicit opacity (0.0-1.0)
+#
+# Env overrides:
+#   ALACRITTY_TOGGLE_OPACITY_CONFIG   path to alacritty.toml
+#   ALACRITTY_TOGGLE_OPACITY_LOW      low value (default 0.7)
+#   ALACRITTY_TOGGLE_OPACITY_HIGH     high value (default 1.0)
+
+set -euo pipefail
+
+CONFIG="${ALACRITTY_TOGGLE_OPACITY_CONFIG:-$HOME/.config/alacritty/alacritty.toml}"
+LOW="${ALACRITTY_TOGGLE_OPACITY_LOW:-0.7}"
+HIGH="${ALACRITTY_TOGGLE_OPACITY_HIGH:-1.0}"
+
+usage() {
+    echo "Usage: $(basename "$0") [opacity]" >&2
+    echo "  opacity: optional explicit value between 0.0 and 1.0" >&2
+    echo "  With no argument, toggles between LOW=$LOW and HIGH=$HIGH" >&2
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+    usage
+    exit 0
+fi
+
+if [[ ! -f "$CONFIG" ]]; then
+    echo "toggle-opacity: config not found at $CONFIG" >&2
+    exit 1
+fi
+
+is_valid_fraction() {
+    # numeric shape check: digits, optional single dot, at least one digit
+    [[ "$1" =~ ^[0-9]*\.?[0-9]+$ ]]
+}
+
+new=""
+
+if [[ $# -ge 1 ]]; then
+    custom="$1"
+    if ! is_valid_fraction "$custom"; then
+        echo "toggle-opacity: '$custom' is not a valid number" >&2
+        usage
+        exit 1
+    fi
+    if ! awk -v v="$custom" 'BEGIN{exit !(v >= 0 && v <= 1)}'; then
+        echo "toggle-opacity: opacity must be between 0.0 and 1.0 (got '$custom')" >&2
+        exit 1
+    fi
+    new="$custom"
+else
+    current="$(awk '
+        /^\[/{ in_window = ($0 ~ /^\[window\]/) ? 1 : 0 }
+        in_window && /^[ \t]*opacity[ \t]*=/ {
+            line=$0
+            sub(/^[^=]*=[ \t]*/, "", line)
+            sub(/[ \t]*(#.*)?$/, "", line)
+            print line
+            exit
+        }
+    ' "$CONFIG")"
+
+    if [[ -z "$current" ]]; then
+        # No opacity key found in [window] yet — default to LOW.
+        new="$LOW"
+    else
+        new="$(awk -v cur="$current" -v low="$LOW" -v high="$HIGH" 'BEGIN{
+            eps = 0.001
+            d_high = cur - high; if (d_high < 0) d_high = -d_high
+            d_low  = cur - low;  if (d_low  < 0) d_low  = -d_low
+            if (d_high < eps)      print low   # currently HIGH -> go LOW
+            else if (d_low < eps)  print high  # currently LOW  -> go HIGH
+            else                   print low   # unexpected value -> default to LOW
+        }')"
+    fi
+fi
+
+tmp="$(mktemp "${CONFIG}.XXXXXX")"
+trap 'rm -f "$tmp"' EXIT
+
+awk -v new="$new" '
+{
+    lines[NR] = $0
+    if ($0 ~ /^\[/) { in_window = ($0 ~ /^\[window\]/) ? 1 : 0 }
+    else if (in_window && $0 ~ /^[ \t]*opacity[ \t]*=/ && !opacity_line) {
+        opacity_line = NR
+    }
+    if ($0 ~ /^\[window\]/ && !window_line) window_line = NR
+}
+END {
+    if (opacity_line) {
+        line = lines[opacity_line]
+        sub(/=.*/, "= " new, line)
+        lines[opacity_line] = line
+    }
+    for (i = 1; i <= NR; i++) {
+        print lines[i]
+        if (!opacity_line && window_line && i == window_line) {
+            print "opacity = " new
+        }
+    }
+}
+' "$CONFIG" > "$tmp"
+
+chmod --reference="$CONFIG" "$tmp" 2>/dev/null || chmod 644 "$tmp"
+mv "$tmp" "$CONFIG"
+trap - EXIT
+
+echo "opacity: $new"
+
+if command -v notify-send >/dev/null 2>&1 && [[ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]]; then
+    notify-send -t 1200 "Alacritty opacity" "$new" 2>/dev/null || true
+fi

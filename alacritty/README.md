@@ -11,4 +11,15 @@ I suggest you to download it from [this link](https://github.com/ryanoasis/nerd-
 
 - <https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts>
 
+## Toggle opacity
+`toggle-opacity` is a small script that flips (or sets) the `opacity` value in Alacritty's `alacritty.toml` `[window]` section.
+
+Usage:
+```
+toggle-opacity            # flip between LOW and HIGH
+toggle-opacity 0.5        # set an explicit opacity (0.0-1.0)
+```
+
+Env overrides: `ALACRITTY_TOGGLE_OPACITY_CONFIG`, `ALACRITTY_TOGGLE_OPACITY_LOW`, `ALACRITTY_TOGGLE_OPACITY_HIGH`.
+
 
