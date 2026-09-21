@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/home/danny2768/mouse-scroll.sh
+Icon=dialog-scripts
+Name=mouse-scroll.sh
+Type=Application
+X-KDE-AutostartScript=true

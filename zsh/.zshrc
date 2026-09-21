@@ -33,11 +33,9 @@ alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
 alias cat='batcat'
 alias python='python3'
-alias idea="nohup $HOME/.local/share/JetBrains/Toolbox/scripts/idea >/dev/null 2>&1 & disown"
-
 
 # Git
-alias git-log-d='git log -all --decorate --oneline --graph'
+alias git-log-d='git log --all --decorate --oneline --graph'
 alias gitd='git checkout develop'
 alias gitm='git checkout main'
 
@@ -50,7 +48,7 @@ alias unvpn='nmcli con down id decobosa'
 # Plugins
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-sudo/sudo.plugin.zsh
+[ -f /usr/share/zsh-sudo/sudo.plugin.zsh ] && source /usr/share/zsh-sudo/sudo.plugin.zsh
 
 # Functions
 function update-system(){
@@ -160,7 +158,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
-export NPM_PRIVATE_TOKEN=
 
 # Flutter SDK
 export PATH="$PATH:/home/danny2768/git/Flutter/flutter_sdk/flutter/bin"
@@ -176,4 +173,12 @@ export PATH="$PATH:/home/danny2768/.local/bin"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH=$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts
+
+# Jetbrains toolbox
+export PATH="$PATH:/home/danny2768/.local/share/JetBrains/Toolbox/scripts"
+
+# Scrcpy
+export PATH="$PATH:/home/danny2768/Documents/scrcpy-v3.3.4"
+
+# Machine-local overrides (tokens, per-machine paths) — never committed
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

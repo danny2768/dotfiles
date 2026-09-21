@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Toggle youtube.com in /etc/hosts to block/unblock access.
+set -euo pipefail
+
+MARKER="# yt-block"
+HOSTS_FILE="/etc/hosts"
+DOMAINS=(youtube.com www.youtube.com m.youtube.com youtu.be)
+
+if grep -q "$MARKER" "$HOSTS_FILE"; then
+    sudo sed -i "/$MARKER\$/d" "$HOSTS_FILE"
+    echo "YouTube unblocked."
+else
+    {
+        for d in "${DOMAINS[@]}"; do
+            printf '127.0.0.1\t%s\t%s\n' "$d" "$MARKER"
+        done
+    } | sudo tee -a "$HOSTS_FILE" > /dev/null
+    echo "YouTube blocked."
+fi

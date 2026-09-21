@@ -55,9 +55,15 @@
         "when": "filesExplorerFocus && !inputFocus"
     },
     {
-        // Delete file when filesExplorerFocus
+        // Move file ash file when filesExplorerFocus
         "key": "d",
         "command": "moveFileToTrash",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
+    {
+        // Delete file when filesExplorerFocus
+        "key": "shift+d",
+        "command": "deleteFile",
         "when": "filesExplorerFocus && !inputFocus"
     },
 

@@ -1,26 +1,13 @@
-# See the documentation for alacritty.toml at
-# https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd
-
-# You can find these themes and many more at
-# https://github.com/alacritty/alacritty-theme
-import = [
-    # "~/.config/alacritty/themes/themes/breeze.toml"
-    "~/.config/alacritty/themes/themes/aura.toml"
-    # "~/.config/alacritty/themes/themes/github_dark.toml"
-    # "~/.config/alacritty/themes/themes/github_dark_high_contrast.toml"
-]
-
-live_config_reload = true
 
 [env]
 WINIT_X11_SCALE_FACTOR="1.0"
 
 [window]
 resize_increments = false
-opacity = 0.7
+opacity = 1.0
 startup_mode = "Windowed"
 title = "Alacritty - zsh"
-dimensions = { columns = 126, lines = 26}
+dimensions = { columns = 166, lines = 37}
 padding = { y = 2 }
 
 
@@ -28,7 +15,8 @@ padding = { y = 2 }
 history = 50000
 
 [font]
-size = 10.25
+size = 12.5
+# normal.family = "MesloLGS NF"
 normal.family = "MesloLGS Nerd Font"
 # normal.family = "Fira Code"
 
@@ -48,4 +36,19 @@ bindings = [
     {key = "Home",mods = "Shift",action = "ScrollToTop"},
     {key = "End",mods = "Shift",action = "ScrollToBottom"},
 
+]
+
+[general]
+
+live_config_reload = true
+# See the documentation for alacritty.toml at
+# https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd
+
+# You can find these themes and many more at
+# https://github.com/alacritty/alacritty-theme
+import = [
+    # "~/.config/alacritty/themes/themes/breeze.toml"
+    "~/.config/alacritty/themes/themes/aura.toml"
+    # "~/.config/alacritty/themes/themes/github_dark.toml"
+    # "~/.config/alacritty/themes/themes/github_dark_high_contrast.toml"
 ]
